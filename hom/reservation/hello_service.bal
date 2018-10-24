@@ -2,6 +2,7 @@
 // Package objects referenced with 'http:' in code
 import ballerina/http;
 import ballerinax/docker;
+import ballerina/config;
 
 # A service endpoint represents a listener.
 @docker:Expose {}
@@ -16,10 +17,10 @@ endpoint http:Listener listener {
     name: "bal-web1.client",
     push: true,
     tag: "0.0.1",
-    buildImage: true,
-    registry:"index.docker.io/mitrai",
-    username: "mitrai",
-    password: "itemsthissingle"
+    registry: "index.docker.io/mitrai",
+    username: "$env{dockerusername}",
+    password: "$env{dockerpassword}",
+    buildImage: true
 }
 service<http:Service> hello bind listener {
 

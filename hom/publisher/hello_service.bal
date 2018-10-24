@@ -16,9 +16,9 @@ endpoint http:Listener listener {
     push: true,
     tag: "0.0.1",
     buildImage: true,
-    registry:"index.docker.io/mitrai",
-    username: "mitrai",
-    password: "itemsthissingle"
+    registry: "index.docker.io/mitrai",
++   username: "$env{dockerusername}",
++   password: "$env{dockerpassword}"
 }
 service<http:Service> hello bind listener {
 
