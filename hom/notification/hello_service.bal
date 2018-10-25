@@ -13,13 +13,13 @@ endpoint http:Listener listener {
 # Advertised on '/hello', port comes from listener endpoint
 
 @docker:Config {
-    name: "bal-web1.notify",
+    name: "publisher",
     push: true,
     tag: "0.0.1",
     buildImage: true,
     registry: "index.docker.io/mitrai",
-+   username: "$env{dockerusername}",
-+   password: "$env{dockerpassword}"
+    username: "$env{DOCKER_REG_USERNAME}",
+    password: "$env{DOCKER_REG_PASSWORD}"
 }
 service<http:Service> hello bind listener {
 

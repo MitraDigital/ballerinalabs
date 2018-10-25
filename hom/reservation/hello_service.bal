@@ -18,8 +18,8 @@ endpoint http:Listener listener {
     push: true,
     tag: "0.0.1",
     registry: "index.docker.io/mitrai",
-    username: "$env{dockerusername}",
-    password: "$env{dockerpassword}",
+    username: "$env{DOCKER_REG_USERNAME}",
+    password: "$env{DOCKER_REG_PASSWORD}",
     buildImage: true
 }
 service<http:Service> hello bind listener {
