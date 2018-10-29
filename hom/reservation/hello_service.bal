@@ -1,27 +1,14 @@
 // A system package containing protocol access constructs
 // Package objects referenced with 'http:' in code
 import ballerina/http;
-import ballerinax/docker;
-import ballerina/config;
 
 # A service endpoint represents a listener.
-@docker:Expose {}
 endpoint http:Listener listener {
-    port:9093
+    port:9091
 };
-
 
 # A service is a network-accessible API
 # Advertised on '/hello', port comes from listener endpoint
-@docker:Config {
-    name: "bal-web1.client",
-    push: true,
-    tag: "0.0.1",
-    registry: "index.docker.io/mitrai",
-    username: "$env{dockerusername}",
-    password: "$env{dockerpassword}",
-    buildImage: true
-}
 service<http:Service> hello bind listener {
 
     # A resource is an invokable API method
