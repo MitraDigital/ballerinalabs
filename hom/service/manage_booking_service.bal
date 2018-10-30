@@ -36,10 +36,9 @@ service<http:Service> reserve bind { port: 9080 } {
                     res.setJsonPayload({"status":"Invalid hotel"});
                 }
                 var response = clientEndpoint->post(untaint reqUrl, untaint jsonPayload);
-                io:println(response);
                 match response {
                     http:Response resp => {
-                        io:println("POST request:");
+                        log:printInfo("Invoking Reservation Service");
                         var msg = resp.getJsonPayload();
                         match msg {
                             json jsonPayload2 => {
