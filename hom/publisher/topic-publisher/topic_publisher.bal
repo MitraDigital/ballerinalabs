@@ -6,7 +6,7 @@ import ballerina/io;
 
 jms:Connection jmsConnection = new({
         initialContextFactory: "org.apache.activemq.jndi.ActiveMQInitialContextFactory",
-        providerUrl: "tcp://localhost:61616"
+        providerUrl: "tcp://localhost:32768"
     });
 
 // Initialize a JMS session on top of the created connection
