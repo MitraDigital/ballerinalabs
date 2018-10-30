@@ -24,32 +24,43 @@ endpoint http:Listener listener {
     port:9094
 };
 
-@http:ServiceConfig {basePath:"/Topic"}
-service<http:Service> topicPublisherService bind listener {
-    @http:ResourceConfig {methods:["POST"], consumes:["application/xml"],
-        produces:["application/xml"]}
+@http:ServiceConfig {
+    basePath:"/Topic"
+}
+service<http:Service> bookstoreService bind listener {
+    // Resource that allows users to place an order for a book
+    @http:ResourceConfig {
+        methods:["POST"],
+        consumes:["application/json"],
+        produces:["application/json"]
+    }
 
     publishMessage(endpoint caller, http:Request request) {
         http:Response response;
-        xml requestPayload;
+        json requestPayload;
+        json responseMessage;
 
-        match request.getXmlPayload() {
-            xml payload => requestPayload = payload;
+        match request.getJsonPayload() {
+            // Valid JSON payload
+            json payload => requestPayload = payload;
+            // NOT a valid JSON payload
             any => {
                 response.statusCode = 400;
-                response.setXmlPayload(xml `<error>Error</error>`);
+                response.setJsonPayload({ "Message": "Invalid payload - Not a valid JSON payload" });
                 _ = caller->respond(response);
                 done;
             }
         }
 
-        jms:Message topicMessage = check jmsSession.createTextMessage(<string> requestPayload);
+        jms:Message topicMessage = check jmsSession.createTextMessage(requestPayload.toString());
         topicPublisher->send(topicMessage) but {
             error e => log:printError("Error occurred while sending "
                     + "message", err=e)
         };
-
-        response.setXmlPayload(xml `<message>Success</message>`);
+        responseMessage = { "Message": "Offer Published Successfully !" };
+        response.setJsonPayload(responseMessage);
         _ = caller->respond(response);
     }
 }
+
+
