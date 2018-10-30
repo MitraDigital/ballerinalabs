@@ -20,6 +20,8 @@ service<http:Service> yalaReservationService bind { port: 9095 } {
         match payload {
             json jsonPayload => {
 
+                log:printInfo("Invoking Yala Reservation Service");
+
                 ReservationDbData reservationDbData ;
                 DatabaseConnector dbConnector;
 
@@ -30,7 +32,7 @@ service<http:Service> yalaReservationService bind { port: 9095 } {
                 dbConnector.dbConfig.jdbcClientConfig.username = config:getAsString("MYSQL_USER_HOTEL1");
                 dbConnector.dbConfig.jdbcClientConfig.password = config:getAsString("MYSQL_PASSWORD_HOTEL1");
 
-                reservationDbData.hotel =   "Reservation";
+                //reservationDbData.hotel =   "Reservation";
                 reservationDbData.tableName =   "Reservation";
                 reservationDbData.customerID = check <string>jsonPayload.customerId;
                 reservationDbData.customerName = check <string>jsonPayload.customerName;

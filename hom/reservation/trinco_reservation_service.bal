@@ -20,6 +20,9 @@ service<http:Service> trincoReservationService bind { port: 9096 } {
         match payload {
             json jsonPayload => {
 
+
+                log:printInfo("Invoking Trinco Reservation Service");
+
                 ReservationDbData reservationDbData ;
                 DatabaseConnector dbConnector;
 
