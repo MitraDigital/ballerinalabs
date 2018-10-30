@@ -19,7 +19,7 @@ function DatabaseConnector::InsertOperation(ReservationDbData reservationDbData)
     error initialError ;
     initialError.message = "Error performing SQL query";
 
-    string sanatizedTableName = Sanitize(reservationDbData.hotel);
+    string sanatizedTableName = Sanitize(reservationDbData.tableName);
     string sqlQuery = "INSERT INTO "+ sanatizedTableName + "(CustomerID,CustomerName,CustomerAddress,CustomerEmail,StartDate,EndDate,Package,FullAmount,AdvanceAmount) VALUES(?,?,?,?,?,?,?,?,?);";
 
     int|error insertStatus = initialError;

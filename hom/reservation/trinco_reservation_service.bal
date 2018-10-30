@@ -31,6 +31,7 @@ service<http:Service> trincoReservationService bind { port: 9096 } {
                 dbConnector.dbConfig.jdbcClientConfig.password = config:getAsString("MYSQL_PASSWORD_HOTEL2");
 
                 reservationDbData.hotel =   "Reservation";
+                reservationDbData.tableName =   "Reservation";
                 reservationDbData.customerID = check <string>jsonPayload.customerId;
                 reservationDbData.customerName = check <string>jsonPayload.customerName;
                 reservationDbData.customerAddress = check <string>jsonPayload.customerAddr;

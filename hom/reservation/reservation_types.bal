@@ -1,6 +1,7 @@
 import ballerina/jdbc;
 
 public type ReservationDbData record {
+    string tableName;
     string hotel;
     string customerID;
     string customerName;

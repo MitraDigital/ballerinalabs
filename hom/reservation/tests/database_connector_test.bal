@@ -12,6 +12,7 @@ function testDBConnectorSuccess() {
     dbConnector.dbConfig.jdbcClientConfig.password = config:getAsString("MYSQL_PASSWORD_HOTEL1");
 
     reservationDbData.hotel =   "Reservation";
+    reservationDbData.tableName =   "Reservation";
     reservationDbData.customerID = "11111111v";
     reservationDbData.customerName = "testCust2";
     reservationDbData.customerAddress = "testCus2 Addr";
@@ -40,6 +41,7 @@ function testDBConnectorInvalidTable() {
     dbConnector.dbConfig.jdbcClientConfig.password = config:getAsString("MYSQL_PASSWORD_HOTEL1");
 
     reservationDbData.hotel =   "test";
+    reservationDbData.tableName =   "test";
     reservationDbData.customerID = "11111111v";
     reservationDbData.customerName = "testCust2";
     reservationDbData.customerAddress = "testCus2 Addr";
