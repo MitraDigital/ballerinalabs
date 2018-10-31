@@ -18,9 +18,12 @@ endpoint jms:TopicPublisher topicPublisher {
 endpoint http:Listener listener {
     port:9081
 };
+
 @http:ServiceConfig {
     basePath:"/Topic",
-    allowHeaders: ["Content-Type","Access-Control-Allow-Origin"],
+    cors :{
+        allowHeaders: ["Content-Type","Access-Control-Allow-Origin"]
+    }
 }
 service<http:Service> bookstoreService bind listener {
     // Resource that allows users to place an order for a book
