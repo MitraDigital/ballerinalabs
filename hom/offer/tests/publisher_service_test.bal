@@ -1,7 +1,7 @@
 import ballerina/http;
 import ballerina/test;
 endpoint http:Client publisherEP {
-    url: "http://localhost:9094/Topic"
+    url: "http://localhost:9081/Topic"
 };
 @test:Config
 function testResourcePublishMessage() {

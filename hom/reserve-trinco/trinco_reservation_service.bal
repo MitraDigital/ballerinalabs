@@ -6,7 +6,7 @@ import ballerinax/docker;
 import reservation;
 
 @http:ServiceConfig { basePath: "/trinco" }
-service<http:Service> trincoReservationService bind { port: 9096 } {
+service<http:Service> trincoReservationService bind { port: 9082 } {
 
     @http:ResourceConfig {
         methods: ["POST"],

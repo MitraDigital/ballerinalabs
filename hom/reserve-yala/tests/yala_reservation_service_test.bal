@@ -2,7 +2,7 @@ import ballerina/test;
 import ballerina/http;
 
 endpoint http:Client yalaReservationServiceEP {
-    url:"http://localhost:9095/yala"
+    url:"http://localhost:9083/yala"
 };
 
 @test:Config

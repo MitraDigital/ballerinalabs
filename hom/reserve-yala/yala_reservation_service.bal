@@ -6,7 +6,7 @@ import ballerinax/docker;
 import reservation;
 
 @http:ServiceConfig { basePath: "/yala" }
-service<http:Service> yalaReservationService bind { port: 9095 } {
+service<http:Service> yalaReservationService bind { port: 9083 } {
 
     @http:ResourceConfig {
         methods: ["POST"],

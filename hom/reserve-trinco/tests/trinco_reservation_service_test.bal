@@ -2,7 +2,7 @@ import ballerina/test;
 import ballerina/http;
 
 endpoint http:Client trincoReservationServiceEP {
-    url:"http://localhost:9096/trinco"
+    url:"http://localhost:9082/trinco"
 };
 
 @test:Config

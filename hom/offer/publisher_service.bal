@@ -16,7 +16,7 @@ endpoint jms:TopicPublisher topicPublisher {
     topicPattern:"BallerinaTopic"
 };
 endpoint http:Listener listener {
-    port:9094
+    port:9081
 };
 @http:ServiceConfig {
     basePath:"/Topic",
