@@ -2,6 +2,32 @@ import ballerina/io;
 import ballerina/log;
 import ballerina/http;
 import ballerinax/docker;
+import ballerinax/kubernetes;
+
+@kubernetes:Ingress {
+    hostname:"webinar.mitra.com",
+    name:"trinco-reservation-service",
+    path:"/trinco-reservation"
+}
+@kubernetes:Service {
+    serviceType:"NodePort",
+    name:"trinco-reservation-service"
+}
+endpoint http:Listener listener {
+    port:9090,
+    secureSocket:{
+        keyStore:{
+            path:"${ballerina.home}/bre/security/ballerinaKeystore.p12",
+            password:"ballerina"
+        }
+    }
+};
+
+//Service annotations
+@kubernetes:Deployment {
+    dockerHost:"tcp://192.168.99.100:2376",
+    dockerCertPath:"/home/kapila/.minikube/certs"
+}
 
 @http:ServiceConfig { basePath: "/trinco" }
 service<http:Service> trincoReservationService bind { port: 9096 } {

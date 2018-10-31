@@ -20,9 +20,29 @@ endpoint jms:TopicPublisher topicPublisher {
     topicPattern:"BallerinaTopic"
 };
 
-endpoint http:Listener listener {
-    port:9094
-};
+//@kubernetes:Ingress {
+//    hostname:"webinar.mitra.com",
+//    name:"topic publisher service",
+//    path:"/topic-publisher"
+//}
+//@kubernetes:Service {
+//    serviceType:"NodePort",
+//    name:"topic-publisher-service"
+//}
+//endpoint http:Listener listener {
+//    port:9090,
+//    secureSocket:{
+//        keyStore:{
+//            path:"${ballerina.home}/bre/security/ballerinaKeystore.p12",
+//            password:"ballerina"
+//        }
+//    }
+//};
+//
+////Service annotations
+//@kubernetes:Deployment {
+//    enableLiveness:true
+//}
 
 @http:ServiceConfig {basePath:"/Topic"}
 service<http:Service> topicPublisherService bind listener {
