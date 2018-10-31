@@ -2,6 +2,7 @@ import ballerina/config;
 import ballerina/http;
 import ballerina/io;
 import ballerina/jms;
+import ballerina/log;
 import wso2/facebook;
 
 type FbPost record {
@@ -25,7 +26,7 @@ endpoint facebook:Client facebookEP {
 
 jms:Connection jmsSubscriberConnection = new({
         initialContextFactory: "org.apache.activemq.jndi.ActiveMQInitialContextFactory",
-        providerUrl: "tcp://localhost:61616"
+        providerUrl: "tcp://localhost:32768"
     });
 
 jms:Session jmsSubscriberSession = new(jmsSubscriberConnection, {
