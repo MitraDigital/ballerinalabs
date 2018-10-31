@@ -1,10 +1,12 @@
 import ballerina/io;
 import ballerina/log;
 import ballerina/http;
+import ballerina/config;
 import ballerinax/docker;
+import reservation;
 
-@http:ServiceConfig { basePath: "/trinco" }
-service<http:Service> trincoReservationService bind { port: 9096 } {
+@http:ServiceConfig { basePath: "/yala" }
+service<http:Service> yalaReservationService bind { port: 9095 } {
 
     @http:ResourceConfig {
         methods: ["POST"],
@@ -20,20 +22,19 @@ service<http:Service> trincoReservationService bind { port: 9096 } {
         match payload {
             json jsonPayload => {
 
+                log:printInfo("Invoking Yala Reservation Service");
 
-                log:printInfo("Invoking Trinco Reservation Service");
+                reservation:ReservationDbData reservationDbData ;
+                reservation:DatabaseConnector dbConnector;
 
-                ReservationDbData reservationDbData ;
-                DatabaseConnector dbConnector;
+                reservation:ReservationEmailData reservationEmailData;
+                reservation:GmailSender gmailSender;
 
-                ReservationEmailData reservationEmailData;
-                GmailSender gmailSender;
+                dbConnector.dbConfig.jdbcClientConfig.url = config:getAsString("JDBC_URL_HOTEL1");
+                dbConnector.dbConfig.jdbcClientConfig.username = config:getAsString("MYSQL_USER_HOTEL1");
+                dbConnector.dbConfig.jdbcClientConfig.password = config:getAsString("MYSQL_PASSWORD_HOTEL1");
 
-                dbConnector.dbConfig.jdbcClientConfig.url = config:getAsString("JDBC_URL_HOTEL2");
-                dbConnector.dbConfig.jdbcClientConfig.username = config:getAsString("MYSQL_USER_HOTEL2");
-                dbConnector.dbConfig.jdbcClientConfig.password = config:getAsString("MYSQL_PASSWORD_HOTEL2");
-
-                reservationDbData.hotel =   "Reservation";
+                //reservationDbData.hotel =   "Reservation";
                 reservationDbData.tableName =   "Reservation";
                 reservationDbData.customerID = check <string>jsonPayload.customerId;
                 reservationDbData.customerName = check <string>jsonPayload.customerName;
