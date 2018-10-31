@@ -19,7 +19,8 @@ endpoint http:Listener listener {
     port:9094
 };
 @http:ServiceConfig {
-    basePath:"/Topic"
+    basePath:"/Topic",
+    allowHeaders: ["Content-Type","Access-Control-Allow-Origin"],
 }
 service<http:Service> bookstoreService bind listener {
     // Resource that allows users to place an order for a book
