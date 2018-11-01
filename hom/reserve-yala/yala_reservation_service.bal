@@ -4,9 +4,25 @@ import ballerina/http;
 import ballerina/config;
 import ballerinax/docker;
 import reservation;
+import ballerinax/kubernetes;
+
+@kubernetes:Ingress {
+    hostname: "webinar.mitra.com",
+    name: "yala-reservation-service",
+    path: "/yala-reservation-service"
+}
+@kubernetes:Service {
+    serviceType: "NodePort",
+    name: "yala-reservation-service"
+}
+@kubernetes:Deployment {
+    dockerHost: "tcp://192.168.99.100:2376",
+    dockerCertPath: "/home/kapila/.minikube/certs"
+}
+
 
 @http:ServiceConfig { basePath: "/yala" }
-service<http:Service> yalaReservationService bind { port: 9083 } {
+service<http:Service> yalaReservationService bind { port: 9090 } {
 
     @http:ResourceConfig {
         methods: ["POST"],
