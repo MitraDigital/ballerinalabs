@@ -61,8 +61,8 @@ service<jms:Consumer> jmsListener bind subscriberEndpoint {
                             }
                         }
 
-                }
-                any => log:printError("Incorrect Message format");
+            }
+            error e => log:printError("Error occurred while reading message", err=e);
         }
     }
 }
