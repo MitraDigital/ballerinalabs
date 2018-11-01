@@ -1,4 +1,5 @@
 import ballerina/config;
+import ballerina/internal;
 import ballerina/http;
 import ballerina/io;
 import ballerina/jms;
@@ -44,10 +45,10 @@ service<jms:Consumer> jmsListener bind subscriberEndpoint {
         match (message.getTextMessageContent()) {
             string messageText => {
                 log:printInfo("Message : " + messageText);
-                json jsonMessage=<json> messageText;
-                log:printInfo("jsonMessage : " + jsonMessage.toString());
+                json jsonMessage=internal:parseJson(messageText) but { error => log:printError("Error parsing JSON") };
                 json offerMessage=jsonMessage["message"];
-                log:printInfo("jsonMessage.message : " + offerMessage.toString());
+                json offerid=jsonMessage["offerid"];
+                log:printInfo("Offer message : " + offerMessage.toString());
 
                 var response = facebookEP -> createPost("2134876629909100", offerMessage.toString() , "", "");
                         match response {
