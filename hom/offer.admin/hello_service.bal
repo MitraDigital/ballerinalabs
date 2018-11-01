@@ -2,24 +2,28 @@
 // Package objects referenced with 'http:' in code
 import ballerina/http;
 import ballerinax/docker;
+import ballerinax/kubernetes;
 
 # A service endpoint represents a listener.
-@docker:Expose {}
+@kubernetes:Ingress {
+    hostname: "webinar.mitra.com",
+    name: "offer-service",
+    path: "/offer"
+}
+@kubernetes:Service {
+    serviceType: "NodePort",
+    name: "offer-service"
+}
 endpoint http:Listener listener {
-    port:9091
+    port: 9090
 };
 
-# A service is a network-accessible API
-# Advertised on '/hello', port comes from listener endpoint
-@docker:Config {
-    name: "bal-web1.admin",
-    push: true,
-    tag: "0.0.1",
-    buildImage: true,
-    registry: "index.docker.io/mitrai",
-    username: "$env{DOCKER_REG_USERNAME}",
-    password: "$env{DOCKER_REG_PASSWORD}"
+//Service annotations
+@kubernetes:Deployment {
+    dockerHost: "tcp://192.168.99.100:2376",
+    dockerCertPath: "/home/kapila/.minikube/certs"
 }
+
 service<http:Service> hello bind listener {
 
     # A resource is an invokable API method
@@ -29,7 +33,7 @@ service<http:Service> hello bind listener {
     # + caller - Server Connector
     # + request - Request
 
-    sayHello (endpoint caller, http:Request request) {
+    sayHello(endpoint caller, http:Request request) {
 
         // Create object to carry data back to caller
         http:Response response = new;
@@ -40,6 +44,6 @@ service<http:Service> hello bind listener {
         // Send a response back to caller
         // Errors are ignored with '_'
         // -> indicates a synchronous network-bound call
-        _ = caller -> respond(response);
+        _ = caller->respond(response);
     }
 }
