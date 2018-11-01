@@ -7,7 +7,10 @@ endpoint http:Client clientEndpoint {
 };
 
 @http:ServiceConfig {
-    basePath: "/reserve"
+    basePath: "/reserve",
+    cors :{
+        allowHeaders: ["Content-Type","Access-Control-Allow-Origin"]
+    }
 }
 service<http:Service> reserve bind { port: 9080 } {
 
@@ -23,13 +26,14 @@ service<http:Service> reserve bind { port: 9080 } {
         match payload {
             json jsonPayload => {
                 log:printInfo("Invoking Routing Service");
+                log:printInfo(jsonPayload.toString());
                 string hotel = check <string> jsonPayload.hotelId;
                 string reqUrl = "";
                 if (hotel == "trinco"){
-                    reqUrl = ":9096/"+hotel+"/reservation";
+                    reqUrl = ":9082/"+hotel+"/reservation";
                 }
                 else if (hotel == "yala"){
-                    reqUrl = ":9095/"+hotel+"/reservation";
+                    reqUrl = ":9083/"+hotel+"/reservation";
                 }
                 else{
                     res.statusCode = 500;

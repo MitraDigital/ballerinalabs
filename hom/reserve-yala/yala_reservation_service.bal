@@ -43,8 +43,8 @@ service<http:Service> yalaReservationService bind { port: 9083 } {
                 reservationDbData.startDate = check <string>jsonPayload.checkIn;
                 reservationDbData.endDate =  check <string>jsonPayload.checkOut;
                 reservationDbData.package = check <string>jsonPayload.package;
-                reservationDbData.fullAmount = check <float>jsonPayload.fullAmount;
-                reservationDbData.advanceAmount = check <float>jsonPayload.advanceAmount;
+                reservationDbData.fullAmount = check <string>jsonPayload.fullAmount;
+                //reservationDbData.advanceAmount = check <float>jsonPayload.advanceAmount;
 
                 reservationEmailData.cutomerName = check <string>jsonPayload.customerName;
                 reservationEmailData.customerEmail = check <string>jsonPayload.customerEmail;

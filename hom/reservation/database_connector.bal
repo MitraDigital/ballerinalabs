@@ -20,13 +20,13 @@ function DatabaseConnector::InsertOperation(ReservationDbData reservationDbData)
     initialError.message = "Error performing SQL query";
 
     string sanatizedTableName = Sanitize(reservationDbData.tableName);
-    string sqlQuery = "INSERT INTO "+ sanatizedTableName + "(CustomerID,CustomerName,CustomerAddress,CustomerEmail,StartDate,EndDate,Package,FullAmount,AdvanceAmount) VALUES(?,?,?,?,?,?,?,?,?);";
+    string sqlQuery = "INSERT INTO "+ sanatizedTableName + "(CustomerID,CustomerName,CustomerAddress,CustomerEmail,StartDate,EndDate,Package,FullAmount) VALUES(?,?,?,?,?,?,?,?);";
 
     int|error insertStatus = initialError;
 
     transaction with retries = 4, oncommit = onCommitFunction,
                      onabort = onAbortFunction {
-        var resultStatus = reservationDB->update(sqlQuery,reservationDbData.customerID,reservationDbData.customerName,reservationDbData.customerAddress,reservationDbData.customerEmail,reservationDbData.startDate,reservationDbData.endDate,reservationDbData.package,reservationDbData.fullAmount,reservationDbData.advanceAmount);
+        var resultStatus = reservationDB->update(sqlQuery,reservationDbData.customerID,reservationDbData.customerName,reservationDbData.customerAddress,reservationDbData.customerEmail,reservationDbData.startDate,reservationDbData.endDate,reservationDbData.package,reservationDbData.fullAmount);
 
         match resultStatus {
             int resultInt => {

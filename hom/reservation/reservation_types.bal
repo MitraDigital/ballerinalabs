@@ -10,7 +10,7 @@ public type ReservationDbData record {
     string startDate;
     string endDate;
     string package;
-    float fullAmount;
+    string fullAmount;
     float advanceAmount;
 };
 

@@ -44,8 +44,8 @@ service<http:Service> trincoReservationService bind { port: 9082 } {
                 reservationDbData.startDate = check <string>jsonPayload.checkIn;
                 reservationDbData.endDate =  check <string>jsonPayload.checkOut;
                 reservationDbData.package = check <string>jsonPayload.package;
-                reservationDbData.fullAmount = check <float>jsonPayload.fullAmount;
-                reservationDbData.advanceAmount = check <float>jsonPayload.advanceAmount;
+                reservationDbData.fullAmount = check <string>jsonPayload.fullAmount;
+                //reservationDbData.advanceAmount = check <float>jsonPayload.advanceAmount;
 
                 reservationEmailData.cutomerName = check <string>jsonPayload.customerName;
                 reservationEmailData.customerEmail = check <string>jsonPayload.customerEmail;
