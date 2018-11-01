@@ -25,8 +25,8 @@ endpoint http:Listener listener {
         allowHeaders: ["Content-Type","Access-Control-Allow-Origin"]
     }
 }
-service<http:Service> bookstoreService bind listener {
-    // Resource that allows users to place an order for a book
+service<http:Service> offerService bind listener {
+    // Resource that allows users to place an offer request
     @http:ResourceConfig {
         methods:["POST"],
         consumes:["application/json"],

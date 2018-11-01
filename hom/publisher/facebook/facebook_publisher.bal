@@ -19,7 +19,7 @@ type JsonPayload record {
 endpoint facebook:Client facebookEP {
     clientConfig:{
         auth:{
-            accessToken:config:getAsString("FACEBOOK_TOKEN")
+            accessToken:"EAAfFreUnYFEBAEZB8myEeb8kK5UXCLw6QqeT5Hg6nh4FaH7QebPnUa2r5eb87QZC4T4oo2Cq4ZCTyJZAfuf0UAzZAhMlZCyaBiZBABZCZBBXO5zuW2a3acbV9EYZCSKOMz24mvdf777ZAXYYDs7AuIVx6KYVEmnRzI9G0gbElZBLjAh7fbahACsc9z0R"
         }
     }
 };
@@ -44,7 +44,12 @@ service<jms:Consumer> jmsListener bind subscriberEndpoint {
         match (message.getTextMessageContent()) {
             string messageText => {
                 log:printInfo("Message : " + messageText);
-                var response = facebookEP -> createPost(config:getAsString("FACEBOOK_PAGE_ID"), messageText, "", "");
+                json jsonMessage=<json> messageText;
+                log:printInfo("jsonMessage : " + jsonMessage.toString());
+                json offerMessage=jsonMessage["message"];
+                log:printInfo("jsonMessage.message : " + offerMessage.toString());
+
+                var response = facebookEP -> createPost("2134876629909100", offerMessage.toString() , "", "");
                         match response {
                             facebook:Post fbPost => {
                                 io:println(fbPost);
@@ -56,8 +61,8 @@ service<jms:Consumer> jmsListener bind subscriberEndpoint {
                             }
                         }
 
-            }
-            error e => log:printError("Error occurred while reading message", err=e);
+                }
+                any => log:printError("Incorrect Message format");
         }
     }
 }
